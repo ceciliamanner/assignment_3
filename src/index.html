@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/style.css" /> 
+    <title>Norway Quiz</title>
+</head>
+<body>
+    <div class="quiz__container">
+        <div class="start-screen">
+            <h1>Norway Quiz</h1>
+            <p>How Much Do You Really Know About Norway</p>
+            <button class="quiz__button--start">Start</button>
+        </div>
+        
+        <div class="game-screen hidden">
+            <span class="quiz__number"></span>
+            <h2 class="quiz__question"></h2>
+            <div class="quiz__options"></div>
+            <button class="quiz__button--restart">Restart</button>
+            <button class="quiz__button--next">Next</button>
+            <button class="quiz__button--submit hidden">Submit</button>
+        </div>
+
+        <div class="score-screen hidden">
+            <h2 class="quiz__score--title">Your Score:</h2>
+            <p class="quiz__score"></p>
+            <button class="quiz__button--review">Revieww</button>
+
+        </div>
+
+        <div class="review-screen hidden">
+            <h2 class="quiz__review--title">Review Answars</h2>
+            <div class="quiz__review--content"></div>
+            <button class="quiz__button--close">Close</button>
+        </div>
+    </div>
+
+
+    <script src="./js/app.js"></script>
+</body>
+</html>

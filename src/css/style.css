@@ -1,0 +1,25 @@
+
+body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 120px;
+    background-image: url(../assets/images/marius.jpg);
+}
+
+.hidden{
+    display: none;
+}
+
+.quiz__container{
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    height: 600px;
+    background-color: var(--color-background);
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    border-radius: 60px;
+
+}
