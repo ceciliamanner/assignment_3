@@ -1,4 +1,4 @@
-const queststions = [
+const questions = [
     {
         question: "Oslo's Opera House is supposed to look like ... ?",
         options: ["Giant Snowflake", "Mountain Peak", "Spaceship", "Iceberg"],
@@ -63,6 +63,10 @@ const quizReviewTitle = document.querySelector(".quiz__review--title"); //
 const quizReviewContent = document.querySelector(".quiz__review--content"); 
 const quizButtonClose = document.querySelector(".quiz__button--close");
 
+//----* start screen*----// 
+let currentQuizIndex = 0; 
+let score = 0; 
+let selectedAnswer = null; 
 
 function showElement (element){
     element.classList.remove("hidden");
@@ -73,7 +77,106 @@ function hideElement (element){
 }
 
 quizButtonStart.addEventListener("click", () => {
+    currentQuizIndex = 0; 
+    score = 0;
+    selectedAnswer = null; 
     hideElement (startScreen); 
     showElement (gameScreen);
+    displayQuestion()
     
-})
+}); 
+
+//----* game screen *----//
+
+
+const displayQuestion = () => {
+
+    // display question 1 / 8 
+    const quizData = questions[currentQuizIndex];
+    
+    quizNumber.innerText = `${currentQuizIndex + 1} / ${questions.length}`;
+    quizQuestion.innerText = quizData.question; 
+    quizOptions.innerHTML = ""; 
+
+    // display the quiz-options 
+    quizData.options.forEach(option => {
+        const optionButton = document.createElement("button"); 
+        optionButton.classList.add("quiz-option"); 
+        quizOptions.append(optionButton);
+        optionButton.innerText = option; 
+
+        optionButton.addEventListener("click", () => {
+            selectedAnswer = option; 
+            
+        }); 
+    });
+
+}; 
+
+// next button
+
+quizButtonNext.addEventListener("click", () => {
+    if (selectedAnswer === null){
+        return; 
+    };
+
+    const quizData = questions[currentQuizIndex];       
+    /* usersAnswers[currentQuizIndex] = selectedAnswer;  */
+
+    if (selectedAnswer === quizData.answer){        //addera score
+        score++; 
+    }; 
+
+    if(currentQuizIndex === questions.length - 1){  
+        hideElement(quizQuestion);
+        hideElement(quizNumber);
+        hideElement(quizOptions);
+        quizButtonNext.classList.add("hidden");        
+        quizButtonSubmit.classList.remove("hidden");
+    }else{
+        currentQuizIndex++; 
+        selectedAnswer = null; 
+        displayQuestion();
+    }
+
+}); 
+
+// restart button
+
+quizButtonRestart.addEventListener("click", () => {
+    currentQuizIndex = 0;
+    score = 0; 
+    displayQuestion(); 
+});
+
+// submit button
+
+quizButtonSubmit.addEventListener("click", () => {
+    quizScore.innerText = `Your score is ${score} out of ${questions.length}`;
+    hideElement(gameScreen);
+    showElement(scoreScreen);
+}); 
+
+
+//-----* review screen *-----// 
+
+
+quizButtonReview.addEventListener("click", () => {
+    hideElement(scoreScreen);
+    showElement(reviewScreen);
+
+    questions.forEach((question, index) => {
+        const reviewEachAnswer = document.createElement("div");
+        reviewEachAnswer.classList.add("review-answers"); 
+
+        const questionText = document.createElement("p"); 
+        questionText.innerText = `Q${index +1}: ${question.question}`; 
+        reviewEachAnswer.append(questionText);
+
+    });
+
+
+});
+
+
+    
