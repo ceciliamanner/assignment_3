@@ -3,46 +3,55 @@ const questions = [
         question: "Oslo's Opera House is supposed to look like ... ?",
         options: ["Giant Snowflake", "Mountain Peak", "Spaceship", "Iceberg"],
         answer: "Iceberg", 
+        userAnswer: null, 
+        
     },
     {
         question: "What was the name of Norway’s capital city between 1624 and 1925?",
         options: ["Oslofjord", "Malmø", "Christiania", "Nordvik" ],
         answer: "Christiania", 
+        userAnswer: null, 
     },
     {
         question: "Whats the classic Friday night food in Norway that everyone loves?",
         options: ["Grandiosa", "Fårikål", "Salmon", "Taco"],
         answer: "Taco",
+        userAnswer: null, 
     },
     {
         question: "What is Norway most famous for in the Eurovision Song Contest?",
         options: ["Winning the most times", "Getting zero points", "Always sending heavy metal bands", "Being super dramatic on stage"],
         answer: "Getting zero points", 
+        userAnswer: null, 
     },
     {
         question: "When do Norwegians most often greet each other with a friendly “hi”?",
         options: ["At Christmas time", "In bars", "At the libery", "On the mountains"],
         answer: "On the mountains",
+        userAnswer: null, 
     },
     {
         question: "Who´s the Norwegian pop sensation behind the iconic “Take On Me” that made you wanna dance like a maniac?",
         options: ["Kygo", "A-ha", "Alan Walker", "Sigrid"],
         answer: "A-ha",
+        userAnswer: null, 
     },
     {
         question: "When did Peppe's Pizza, Norway's beloved pizza chain, first open its doors?",
         options: ["1958", "1970", "1983", "1995"],
         answer: "1970",
+        userAnswer: null, 
     },
     {
         question: "Who invented the iconic Norwegian cheese slicer (Osthyvel) in 1925?",
         options: ["Ole Gunnar Solskjær", "Edvard Munch", "Thor Bjørklund", "Fridtjof Nansen"],
         answer: "Thor Bjørklund",
+        userAnswer: null, 
     }
 ];
 
 const quizContainer = document.querySelector(".quiz__container");
-const startScreen = document.querySelector(".start-screen"); // 
+const startScreen = document.querySelector(".start-screen"); 
 const quizButtonStart = document.querySelector(".quiz__button--start");
 
 const gameScreen = document.querySelector(".game-screen");
@@ -54,14 +63,11 @@ const quizButtonNext = document.querySelector(".quiz__button--next");
 const quizButtonSubmit = document.querySelector(".quiz__button--submit"); 
 
 const scoreScreen = document.querySelector(".score-screen");
-const quizScoreTitle = document.querySelector(".quiz__score--title"); // 
 const quizScore = document.querySelector(".quiz__score");
 const quizButtonReview = document.querySelector(".quiz__button--review");
 
 const reviewScreen = document.querySelector(".review-screen");
-const quizReviewTitle = document.querySelector(".quiz__review--title"); //
 const quizReviewContent = document.querySelector(".quiz__review--content"); 
-const quizButtonClose = document.querySelector(".quiz__button--close");
 
 //----* start screen*----// 
 let currentQuizIndex = 0; 
@@ -121,9 +127,9 @@ quizButtonNext.addEventListener("click", () => {
     };
 
     const quizData = questions[currentQuizIndex];       
-    /* usersAnswers[currentQuizIndex] = selectedAnswer;  */
+    questions[currentQuizIndex].userAnswer = selectedAnswer; 
 
-    if (selectedAnswer === quizData.answer){        //addera score
+    if (selectedAnswer === quizData.answer){       
         score++; 
     }; 
 
@@ -137,7 +143,7 @@ quizButtonNext.addEventListener("click", () => {
         currentQuizIndex++; 
         selectedAnswer = null; 
         displayQuestion();
-    }
+    };
 
 }); 
 
@@ -160,23 +166,38 @@ quizButtonSubmit.addEventListener("click", () => {
 
 //-----* review screen *-----// 
 
-
 quizButtonReview.addEventListener("click", () => {
     hideElement(scoreScreen);
     showElement(reviewScreen);
 
+    quizReviewContent.innerHTML = ""; 
+
     questions.forEach((question, index) => {
         const reviewEachAnswer = document.createElement("div");
         reviewEachAnswer.classList.add("review-answers"); 
+        
 
+        // Frågetext
         const questionText = document.createElement("p"); 
-        questionText.innerText = `Q${index +1}: ${question.question}`; 
+        questionText.innerText = `Q${index + 1}: ${question.question}`; 
         reviewEachAnswer.append(questionText);
 
+        // Användarens svar
+        const userAnswerText = document.createElement("p");
+        const userAnswer = question.userAnswer 
+        userAnswerText.innerText = `Your Answer: ${userAnswer}`;
+        userAnswerText.classList.add(userAnswer === question.answer ? "correct-answer" : "wrong-answer");
+
+        reviewEachAnswer.append(userAnswerText);
+
+        // Rätt svar
+        const correctAnswerText = document.createElement("p");
+        correctAnswerText.innerText = `Correct Answer: ${question.answer}`;
+        correctAnswerText.classList.add("correct-answer");
+
+        reviewEachAnswer.append(correctAnswerText);
+
+        // Lägg till varje fråga/svar i reviewContent
+        quizReviewContent.append(reviewEachAnswer);
     });
-
-
 });
-
-
-    
