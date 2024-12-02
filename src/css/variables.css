@@ -1,14 +1,17 @@
 :root {
+    /* Colors */
     --color-foreground: #2f3f6b;
     --color-background: #e7f5ff; 
 
-     /* spacing */ 
+     /* Spacing */ 
      --spacing-small: 0.5rem;
      --spacing-medium: 1rem;
      --spacing-large: 1.5rem;
      --spacing-xlarge: 2rem;
      --spacing-xxlarge: 3rem;
+}
 
-     /* font size */ 
-
+@font-face {
+    font-family: 'nunito';
+    src: url(../assets/fonts/Nunito-Light.ttf);
 }
