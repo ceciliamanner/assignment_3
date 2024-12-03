@@ -69,6 +69,7 @@ const reviewScreen = document.querySelector(".review-screen");
 const quizReviewContent = document.querySelector(".quiz__review--content"); 
 
 //--------* start screen*--------// 
+
 let currentQuizIndex = 0; 
 let score = 0; 
 let selectedAnswer = null; 
