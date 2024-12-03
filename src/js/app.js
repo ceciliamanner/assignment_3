@@ -4,7 +4,6 @@ const questions = [
         options: ["Giant Snowflake", "Mountain Peak", "Spaceship", "Iceberg"],
         answer: "Iceberg", 
         userAnswer: null, 
-        
     },
     {
         question: "What was the name of Norway’s capital city between 1624 and 1925?",
@@ -58,7 +57,7 @@ const gameScreen = document.querySelector(".game-screen");
 const quizNumber = document.querySelector(".quiz__number"); 
 const quizQuestion = document.querySelector(".quiz__question");
 const quizOptions = document.querySelector(".quiz__options");
-const quizButtonRestart = document.querySelector(".quiz__button--restart");
+const quizButtonRestart = document.querySelectorAll(".quiz__button--restart");
 const quizButtonNext = document.querySelector(".quiz__button--next");
 const quizButtonSubmit = document.querySelector(".quiz__button--submit"); 
 
@@ -69,7 +68,7 @@ const quizButtonReview = document.querySelector(".quiz__button--review");
 const reviewScreen = document.querySelector(".review-screen");
 const quizReviewContent = document.querySelector(".quiz__review--content"); 
 
-//----* start screen*----// 
+//--------* start screen*--------// 
 let currentQuizIndex = 0; 
 let score = 0; 
 let selectedAnswer = null; 
@@ -92,12 +91,12 @@ quizButtonStart.addEventListener("click", () => {
     
 }); 
 
-//----* game screen *----//
+//----------* game screen *--------//
 
 
 const displayQuestion = () => {
 
-    // display question 1 / 8 
+    // display question number  
     const quizData = questions[currentQuizIndex];
     
     quizNumber.innerText = `${currentQuizIndex + 1} / ${questions.length}`;
@@ -112,14 +111,17 @@ const displayQuestion = () => {
         optionButton.innerText = option; 
 
         optionButton.addEventListener("click", () => {
+            document.querySelectorAll(".quiz-option").forEach(button => {
+                button.classList.remove("highlight");
+            });
+            optionButton.classList.add("highlight");
             selectedAnswer = option; 
-            
         }); 
     });
 
 }; 
 
-// next button
+// next-button
 
 quizButtonNext.addEventListener("click", () => {
     if (selectedAnswer === null){
@@ -130,41 +132,53 @@ quizButtonNext.addEventListener("click", () => {
     questions[currentQuizIndex].userAnswer = selectedAnswer; 
 
     if (selectedAnswer === quizData.answer){       
-        score++; 
+        score++;  
     }; 
 
-    if(currentQuizIndex === questions.length - 1){  
+    if (currentQuizIndex === questions.length -2) {
+        quizButtonNext.classList.add("hidden");
+        quizButtonSubmit.classList.remove("hidden");
+    } else if (currentQuizIndex === questions.length -1){
         hideElement(quizQuestion);
         hideElement(quizNumber);
         hideElement(quizOptions);
-        quizButtonNext.classList.add("hidden");        
-        quizButtonSubmit.classList.remove("hidden");
-    }else{
-        currentQuizIndex++; 
-        selectedAnswer = null; 
-        displayQuestion();
-    };
+    }
+
+    currentQuizIndex++;
+    selectedAnswer = null; 
+    displayQuestion(); 
 
 }); 
 
-// restart button
+// restart-button
 
-quizButtonRestart.addEventListener("click", () => {
-    currentQuizIndex = 0;
-    score = 0; 
-    displayQuestion(); 
+quizButtonRestart.forEach(button => {
+    button.addEventListener("click", () => {
+        restartQuiz();
+    });
 });
 
-// submit button
+function restartQuiz() {
+    hideElement(scoreScreen);
+    showElement(gameScreen);
+    currentQuizIndex = 0; 
+    score = 0; 
+    displayQuestion(); 
+}
+
+//*----------* score screen *---------*//
+
+// submit-button
 
 quizButtonSubmit.addEventListener("click", () => {
+
     quizScore.innerText = `Your score is ${score} out of ${questions.length}`;
     hideElement(gameScreen);
     showElement(scoreScreen);
 }); 
 
 
-//-----* review screen *-----// 
+//---------* review screen *----------// 
 
 quizButtonReview.addEventListener("click", () => {
     hideElement(scoreScreen);
@@ -177,12 +191,12 @@ quizButtonReview.addEventListener("click", () => {
         reviewEachAnswer.classList.add("review-answers"); 
         
 
-        // Frågetext
+        // Display the question 
         const questionText = document.createElement("p"); 
         questionText.innerText = `Q${index + 1}: ${question.question}`; 
         reviewEachAnswer.append(questionText);
 
-        // Användarens svar
+        // The answer
         const userAnswerText = document.createElement("p");
         const userAnswer = question.userAnswer 
         userAnswerText.innerText = `Your Answer: ${userAnswer}`;
@@ -190,14 +204,12 @@ quizButtonReview.addEventListener("click", () => {
 
         reviewEachAnswer.append(userAnswerText);
 
-        // Rätt svar
+        // Correct answer
         const correctAnswerText = document.createElement("p");
         correctAnswerText.innerText = `Correct Answer: ${question.answer}`;
         correctAnswerText.classList.add("correct-answer");
 
         reviewEachAnswer.append(correctAnswerText);
-
-        // Lägg till varje fråga/svar i reviewContent
         quizReviewContent.append(reviewEachAnswer);
     });
 });
