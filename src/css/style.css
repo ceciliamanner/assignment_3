@@ -4,6 +4,7 @@ body {
     justify-content: center;
     margin-top: 120px;
     background-image: url(../assets/images/marius.jpg);
+    font-family: 'nunito';
 }
 
 .hidden{
@@ -90,6 +91,8 @@ h1{
     font-size: larger;
 }
 
+/* ---------- score screen ----------- */ 
+
 .quiz__button--review{
     margin-top: 2rem;
     background-color: rgb(131, 164, 117); 
@@ -171,8 +174,23 @@ h1{
         font-size: 50px;
     }
 
+    .start-screen p {
+        font-size: 25px;
+    }
+
     .quiz__question{
         font-size: 20px;
+    }
+
+    .quiz__button--next, .quiz__button--restart{
+        padding: 0.5rem 1rem;
+        font-size: medium;
+    }
+
+    .quiz__button--submit {
+        font-size: medium;
+        width: 90px;
+        height: 45px;
     }
 
     .quiz__score{
@@ -181,7 +199,7 @@ h1{
 
     .quiz__button--review {
         font-size: large;
-        width: 70px;
+        width: 90px;
         height: 40px; 
     }
     .review-answers{
@@ -203,6 +221,14 @@ h1{
     .quiz-option {
         width: 17rem;
         font-size: medium;
+    }
+
+    .quiz__button--next, .quiz__button--restart{
+        padding: 0.5rem 1rem;
+    }
+    .quiz__button--review {
+        width: 100px;
+        height: 50px;
     }
 
     .review-answers{
@@ -242,14 +268,20 @@ h1{
         width: 20rem;
         font-size: larger;
     }
-    
+
+    .quiz__button--next {
+        font-size: larger;
+        width: 80px;
+        height: 50px; 
+    }
+
     .quiz__score{
         font-size: 40px;
         padding-bottom: 1rem;
     }
 
     .quiz__button--review {
-        font-size: x-large;
+        font-size: larger;
         width: 100px;
         height: 50px; 
     }
@@ -280,13 +312,8 @@ h1{
         font-size: 30px; 
     }
 
-    .quiz__button--next {
-        width: 80px;
-        height: 50px; 
-    }
-
     .quiz__button--restart {
-        width: 80px;
+        width: 100px;
         height: 50px;
     }
     

@@ -131,12 +131,10 @@ quizButtonNext.addEventListener("click", () => {
 
     const quizData = questions[currentQuizIndex];       
     questions[currentQuizIndex].userAnswer = selectedAnswer; 
+    
+    currentQuizIndex++;
 
-    if (selectedAnswer === quizData.answer){       
-        score++;  
-    }; 
-
-    if (currentQuizIndex === questions.length -2) {
+    if (currentQuizIndex === questions.length -1) {
         quizButtonNext.classList.add("hidden");
         quizButtonSubmit.classList.remove("hidden");
     } else if (currentQuizIndex === questions.length -1){
@@ -145,7 +143,6 @@ quizButtonNext.addEventListener("click", () => {
         hideElement(quizOptions);
     }
 
-    currentQuizIndex++;
     selectedAnswer = null; 
     displayQuestion(); 
 
@@ -159,12 +156,15 @@ quizButtonRestart.forEach(button => {
     });
 });
 
+
 function restartQuiz() {
     hideElement(scoreScreen);
     showElement(gameScreen);
     currentQuizIndex = 0; 
     score = 0; 
     displayQuestion(); 
+    quizButtonSubmit.classList.add("hidden");
+    quizButtonNext.classList.remove("hidden");
 }
 
 //*----------* score screen *---------*//
@@ -173,10 +173,24 @@ function restartQuiz() {
 
 quizButtonSubmit.addEventListener("click", () => {
 
+    if (selectedAnswer !== null){
+        const quizData = questions[currentQuizIndex];
+        questions[currentQuizIndex].userAnswer = selectedAnswer; 
+    }
+
+    score= 0;
+    questions.forEach(question => {
+        if (question.userAnswer === question.answer){
+            score++; 
+        }
+    });
+
     quizScore.innerText = `Your score is ${score} out of ${questions.length}`;
     hideElement(gameScreen);
     showElement(scoreScreen);
 }); 
+
+
 
 
 //---------* review screen *----------// 
